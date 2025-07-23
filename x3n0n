@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>x3n0n games slider</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #1a1a1a;
+      color: #fff;
+      padding: 20px;
+    }
+    .slider-container {
+      overflow-x: auto;
+      white-space: nowrap;
+      padding: 10px;
+      background: #2a2a2a;
+      border-radius: 10px;
+    }
+    .button {
+      display: inline-block;
+      margin: 5px;
+      padding: 10px 20px;
+      background: #444;
+      border: none;
+      border-radius: 6px;
+      color: #fff;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .button:hover {
+      background: #666;
+    }
+  </style>
+</head>
+<body>
+  <h1>v0.1.0</h1>
+  <div class="slider-container" id="slider"></div>
+
+  <script>
+    const slider = document.getElementById('slider');
+    for (let i = 1; i <= 100; i++) {
+      const btn = document.createElement('button');
+      btn.className = 'button';
+
+      if (i === 1) {
+        btn.textContent = 'DS Player';
+        btn.onclick = () => window.location.href = 'https://ds.44670.org/';
+      } else if (i === 2) {
+        btn.textContent = 'GBA Player';
+        btn.onclick = () => window.location.href = 'https://gba.44670.org/';
+      } else {
+        btn.textContent = 'no link';
+        btn.onclick = () => window.location.href = '';
+      }
+
+      slider.appendChild(btn);
+    }
+  </script>
+</body>
+</html>
+
+<div style="padding:20px;">
+  <h2>report bugs here</h2>
+  <input type="text" id="reportInput" placeholder="Type your report..." style="padding:10px; width:60%;">
+  <button onclick="submitReport()" style="padding:10px;">Enter</button>
+</div>
+
+<script>
+  async function submitReport() {
+    const text = document.getElementById('reportInput').value;
+    if (!text) return alert("You didnt type shi so the report didnt send it to me. (error 403)");
+
+    try {
+      await fetch("http://localhost:3000/report", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ report: text })
+      });
+      alert("Report sent!");
+      document.getElementById('reportInput').value = "";
+    } catch (err) {
+      alert("Report system fucked, unfinished or disabled, Im sorry.. (error 503)");
+    }
+  }
+</script>
